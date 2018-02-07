@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#canvas {
+			border: 1px solid #ccc;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="800" height="500"></canvas>
+	<input type="text" id="inp" value="abc">
+	<button id="btn">change</button>
+	<script>
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+
+		ctx.save();
+		ctx.font = '200px 微软雅黑 bold';
+		ctx.fillStyle = 'rgba(168, 168, 168, 1)'
+		ctx.textAlign = 'center';
+		ctx.textBaseline = 'middle';
+		ctx.fillText(document.getElementById('inp').value, canvas.width/2, canvas.height/2);
+		ctx.restore();
+
+		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+		var dots = [];
+
+		for(var x = 0; x < imgData.width; x += 6){
+			for(var y = 0; y < imgData.height; y += 6) {
+				var i = 4*(y*imgData.width + x);
+				if (imgData.data[i] > 128) {
+					// 这个时候要记录下 x y 这个点
+					// console.log(x, y)
+					// dot(x, y)
+					dots.push({
+						x: x,
+						y: y
+					})
+				}
+			}
+		}
+		// 清除之前的文字
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		
+		for (var i = 0; i < dots.length; i++) {
+			var x = dots[i]['x'],
+				y = dots[i]['y'];
+			dot(x, y)
+		}
+
+		function dot(x, y) {
+			ctx.beginPath();
+			ctx.fillStyle = 'red'
+			ctx.arc(x, y, 2,0,2*Math.PI);
+			ctx.stroke();
+			ctx.fill()
+		}
+
+	</script>
+</body>
+</html>
