@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选择排序</title>
+</head>
+<body>
+	<div>
+		<h2>选择排序</h2>
+		<img src="img/02xuanze.gif" alt="">
+	</div>
+	<script>
+		var dataStore = [ 72 , 1 , 68 , 95 , 75 , 54 , 58 , 10 , 35 , 6 , 28 , 45 , 69 , 13 , 88 , 99 , 24 , 28 , 30 , 31 , 78 , 2 , 77 , 82 , 72 ];
+
+		var t = selectSort(dataStore);
+		console.log(t);
+
+		function selectSort(data) {
+			for (var i = 0, len = data.length; i < len - 1; i++) {
+				var min = data[i],
+				    temp,
+				    index = i;
+
+				for(var j = i + 1; j < len; j++) {
+					if (data[j] < min) {
+						min = data[j];
+						index = j;
+					}
+				}
+
+				temp = data[i];
+				data[i] = min;
+				data[index] = temp;
+			}
+			return data;
+		}
+
+	</script>
+</body>
+</html>

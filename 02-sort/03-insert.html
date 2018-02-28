@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>插入排序</title>
+</head>
+<body>
+	<div>
+		<h2>插入排序</h2>
+		<img src="img/03charu.gif" alt="">
+	</div>
+	<script>
+		
+		var dataStore = [ 72 , 1 , 68 , 95 , 75 , 54 , 58 , 10 , 35 , 6 , 28 , 45 , 69 , 13 , 88 , 99 , 24 , 28 , 30 , 31 , 78 , 2 , 77 , 82 , 72 ];
+
+		var t = insertSort(dataStore);
+		console.log(t);
+
+		function insertSort(data) {
+			var len = data.length;
+			for (var i = 1; i < len; i++) {
+				var key = data[i];
+				var j = i - 1;
+				while ( j >= 0 && data[j] > key ) {
+					data[j + 1] = data[j];
+					j--;
+				}
+				data[j + 1] = key;
+			}
+			return data;
+		}
+
+		// function insertSort(data) {
+		// 	var len = data.length;
+		// 	for (var i = 1; i < len; i++) {
+		// 		var key = data[i],
+		// 			j = i - 1;
+		// 		while ( j >= 0 && data[j] > key ) {
+
+		// 		}
+		// 	}
+		// }
+	</script>
+</body>
+</html>
