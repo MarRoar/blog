@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<p>
+		
+	</p>
+	<script>
+		// 数组深拷贝
+		// var arr = ['old', 1, true, ['old1', 'old2'], {old: 1}]
+		// var new_arr = JSON.parse( JSON.stringify(arr) );
+		// console.log(new_arr);
+		// 这个方法有个问题就是不能拷贝函数
+		
+		function deepCopy(obj) {
+			if (typeof obj !== 'object' || obj === null || obj === undefined) return obj;
+			var newObj = obj instanceof Array ? [] : {};
+			for(var key in obj) {
+				if (obj.hasOwnProperty(key)) {
+					newObj[key] = typeof obj[key] !== 'object' ? obj[key] : deepCopy(obj[key])
+				}
+			}
+			return newObj
+		}
+		// 上面这样写会有一个问题，就是如果是某个属性值是null 的话，拷贝之后会成为 {}
+
+		var o = {
+			a: {
+				b: {
+					c: {
+						d: 'abcd',
+						e: null
+					}
+				}
+			},
+			b1: function () {
+				console.log("b1");
+			}
+		}
+		var t = deepCopy(o)
+		console.log(t)
+		t.b1()
+	</script>
+</body>
+</html>

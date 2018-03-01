@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<p>
+		浅拷贝
+	</p>
+	<script>
+		function extend() {
+			var name, options, src, copy;
+		    var length = arguments.length;
+		    var i = 1;
+		    var target = arguments[0];
+
+		    for (; i < length; i++) {
+		        options = arguments[i];
+		        if (options != null) {
+		            for (name in options) {
+		                src = target[name];
+		                copy = options[name];
+
+		                if (copy !== undefined){
+		                    target[name] = copy;
+		                }
+		            }
+		        }
+		    }
+
+		    return target;
+		}
+		var a = {
+			b: {
+				c: "abc",
+				d: function () {
+					console.log("dddd");
+				},
+				e: {
+					f: 'abcdef'
+				}
+			}
+		}
+		var c = extend({}, a);
+		a.b.e.f = "changes"
+		console.log("c", c);
+
+	</script>
+</body>
+</html>
