@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>标签选择</title>
+</head>
+<body>
+	<div id="div1">div1</div>
+	<span class="sp">span1</span>
+	<span class="sp">span2</span>
+
+	<p class="mp">p1</p>
+	<p class="mp">p2</p>
+	<p class="mp">p3</p>
+	<p class="mp">p4</p>
+	<script>
+		// 标签选择
+		
+		// ID 选择器
+		var oDiv1 = document.getElementById('div1')
+		// class 选择器
+		var oSpans = document.getElementsByClassName('sp')
+		// console.log(oSpans)
+
+		// 标签选择器
+		var oPs = document.getElementsByTagName('p');
+		// console.log( oPs )
+		
+		// querySelector
+		// console.log( document.querySelector('p') )
+
+		console.log( document.querySelectorAll('p') )
+	</script>
+</body>
+</html>

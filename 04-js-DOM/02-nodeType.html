@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>标签选择</title>
+</head>
+<body>
+	<div id="div1" class="div" data-name="hello">div1text</div>
+
+	<div id="div2">
+		<!-- <p></p> -->
+	</div>
+	<div id="div1">
+		div1
+		<!-- id="dd" <p class="mp">p1</p> -->
+		<p class="mp">p2</p>
+		<p class="mp">p3</p>
+		<p class="mp">p4</p>
+	</div>
+	<span class="sp">span1</span>
+	<span class="sp">span2</span>
+	<script>
+		/**
+		 * 1
+		 * body 的节点类型是 1
+		 */
+		console.log( document.body, document.body.nodeType )
+		/**
+		 * 2
+		 * 标签的属性 attribute 的节点类型值是 2
+		 */
+		var oDiv1 = document.getElementById('div1')
+		// console.log( oDiv1.attributes )
+		console.log( oDiv1.attributes.id, oDiv1.attributes.id.nodeType )
+
+		/**
+		 * 3 
+		 * 文本类型的
+		 */
+		console.log( oDiv1.childNodes[0], oDiv1.childNodes[0].nodeType )
+
+		/**
+		 * 4
+		 * CDATA节点
+		 * CDATASection类型只针对基于XML的文档，只出现在XML文档中，表示的是CDATA区域，格式一般为<![CDATA[]]>
+		 * 该类型节点的节点类型nodeType的值为4，节点名称nodeName的值为'#cdata-section'，nodevalue的值是CDATA区域中的内容
+		 */
+		
+		/**
+		 * 5
+		 * 实体引用名称节点
+		 * 实体是一个声明，指定了在XML中取代内容或标记而使用的名称。
+		 *  实体包含两个部分， 首先，必须使用实体声明将名称绑定到替换内容。 实体声明是使用 <!ENTITY name "value"> 语法在文档类型定义(DTD)或XML架构中创建的。其次，在实体声明中定义的名称随后将在 XML 中使用。 在XML中使用时，该名称称为实体引用。
+		 * 实体引用名称节点entry_reference的节点类型nodeType的值为5
+		 *
+		 * //实体名称<!ENTITY publisher "Microsoft Press">
+		 * //实体名称引用<pubinfo>Published by &publisher;</pubinfo>
+		 */
+		
+
+		/**
+		 * 6
+		 * 实体名称节点
+		 * 该节点的节点类型nodeType的值为6
+		 */
+		
+		/**
+		 * 7
+		 * 处理指令节点
+		 * 处理指令节点 ProcessingInstruction 的节点类型nodeType的值为7
+		 */
+		
+		/**
+		 * 8
+		 * 注释节点
+		 */
+		
+		var oDiv2 = document.getElementById('div2')
+		console.log( oDiv2.childNodes[1], oDiv2.childNodes[1].nodeType )
+
+		/**
+		 * 9
+		 * 文档节点，也就是 HTML 文档
+		 */
+		
+		console.log( document, document.nodeType )
+
+		/**
+		 * 10
+		 * 文档类型节点
+		 */
+		
+		var oDocumentType = document.firstChild; // 也就是文档声明那个标签
+		console.log( oDocumentType, oDocumentType.nodeType )
+
+		/**
+		 * 11
+		 * 文档片段节点
+		 */
+		
+		var oDocumentFragment = document.createDocumentFragment();
+		console.log( oDocumentFragment, oDocumentFragment.nodeType )
+
+		/**
+		 * 12
+		 * DTD声明节点
+		 */
+		
+
+	</script>
+</body>
+</html>
