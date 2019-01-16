@@ -16,5 +16,50 @@
 			<li>针对上面三个东西解释下概念是什么？提供了哪些属性和方法？</li>
 		</ol>
 	</p>
+	<p>
+		ECMAPScript:<br>
+		ECMAPScript是JavaScript的核心，有时候也会把JavaScript和ECMAScript 表达同一个含义，比如现在 ES2015。其实JavaScript定义的内容要比ECMAScript定义的多。我们都知道JavaScript代码执行是在浏览器里面执行的，那么其实web浏览器只是ECMAScript实现可能的宿主环境之一。宿主环境不仅提供基本的ECMAScript实现，同时也提供了语言的扩展，以方便语言与宿主环境对接交互，比如DOM。
+		<br>
+		ECMAScript 规定的内容是：1、语法，2、类型，3、语句， 4、关键字， 5、保留字，6、操作符，7、对象。
+		所以就不难理解为啥 ES6 里面新的语法了，比如变量的定义 let、 const、class等
+		<br>
+		ECMAScript 的版本，就不再说了，主要是各个版本增加和删除的一些语法等等。
+		<br>
+		ECMAScript 的兼容性，要成为 ECMAScript 的实现，则该实现必须做到以下，1、支持 ECMA-262 描述的所有 “类型，值，对象，属性，函数以及程序句法和语句”，2,、支持 Unicode 标准
+		<br>
+		因为浏览器厂商 并不是完全按照 ECMAScript 来实现的，所以就会存在兼容性，比如在 Chrome里面和在FF浏览器里面有些语法是不同的。
+	</p>
+	<p>
+		DOM: <br>
+		DOM 叫做文档对象模型(Document Object Model) 是针对 XML 经过扩展用于 HTML 的应用程序编程接口。DOM 把整个页面映射成一个多层节点的结构，就类似于多叉树。开发人员借助于 DOM 提供的 API 可以实现 删除 、添加、替换或者修改任何节点。
+		<br>
+		DOM 的级别:
+		<ol>
+			<li> DOM1: DOM1 级由两个模块组成 DOM核心和 DOM HTML， DOM核心规定如何映射基于XML的文档结构，DOM HTML 模块则在DOM核心的基础上加以扩展，添加了针对HTML的对象和方法</li>
+			<li>
+				DOM2: DOM2在DOM1的基础上又扩充了鼠标和用户界面事件、范围、遍历等细分模块，而且通过对象接口增加了对CSS的支持。具体如下
+				1、DOM视图 (DOM Views): 定义了跟踪不同文档（例如，应用CSS 之前和之后的文档）视图的接口；
+				2、DOM 事件（DOM Events）：定义了事件和事件处理的接口；
+				3、DOM 样式（DOM Style）：定义了基于CSS 为元素应用样式的接口；
+				4、DOM 遍历和范围（DOM Traversal and Range）：定义了遍历和操作文档树的接口。
+			</li>
+			<li>
+				DOM3: DOM3 则是进一步扩展了DOM 
+				1、引入了以统一方式加载和保存文档的方法(在DOM 加载和保存（DOM Load and Save）模块中定义)
+				2、增加了验证文档的方法(在DOM 验证（DOM Validation）模块中定义)
+			</li>
+		</ol>
+		DOM 其他标准：DOM 的另外一些新方法和新接口： SVG 、 MathML、 SMIL
+	</p>
+	<p>
+		BOM:开发人员使用BOM 可以控制浏览器显示的页面以外的部分。<br>
+		从根本上讲，BOM只处理浏览器窗口和框架；；但人们习惯上也把所有针对浏览器的JavaScript 扩展算作BOM的一部分。 <br>
+		1、弹出新浏览器窗口的功能。
+		2、移动、缩放和关闭浏览器窗口的功能。
+		3、提供浏览器详细信息的navigator对象。
+		4、提供用户显示器分辨率详细信息的screen。
+		5、cookie的支持。
+		6、像XMLHttpRequest 和IE 的ActiveXObject 这样的自定义对象。
+	</p>
 </body>
 </html>
