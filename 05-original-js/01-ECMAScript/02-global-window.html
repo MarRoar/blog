@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Global对象和window对象</title>
+</head>
+<body>
+	<div>
+		<p>Global（全局）对象可以说是ECMAScript 中最特别的一个对象不属于任何其他对象的属性和方法，最终都是它的属性和方法。事实上，没有全局变量或全局函数；所有在全局作用域中定义的属性和函数，都是Global 对象的属性。本书前面介绍过的那些函数，诸如isNaN()、isFinite()、parseInt()以及parseFloat()，实际上全都是Global对象的方法。除此之外，Global 对象还包含其他一些方法。</p>
+		<ul>
+			<li>URI 编码方法：Global 对象的encodeURI()和encodeURIComponent()方法可以对URI（Uniform Resource Identifiers，通用资源标识符）进行编码，以便发送给浏览器。</li>
+			<li>eval()方法</li>
+			<li>
+				Global 对象的属性
+				<p>
+					特殊的值undefined、NaN 以及Infinity 都是Global 对象的属性。此外，所有原生引用类型的构造函数，像Object 和Function，也都是Global 对象的属性。下表列出了Global 对象的所有属性。
+				</p>
+			</li>
+			<li>
+				window 对象ECMAScript： 虽然没有指出如何直接访问Global 对象，但Web 浏览器都是将这个全局对象作为window 对象的一部分加以实现的。因此，在全局作用域中声明的所有变量和函数，就都成为了window对象的属性。
+			</li>
+		</ul>
+	</div>
+	<div>
+		<p>BOM 的核心对象是window，它表示浏览器的一个实例。在浏览器中，window 对象有双重角色，它既是通过JavaScript 访问浏览器窗口的一个接口，又是ECMAScript 规定的Global 对象。这意味着在网页中定义的任何一个对象、变量和函数，都以window 作为其Global 对象，因此有权访问parseInt()等方法。</p>
+	</div>
+</body>
+</html>
