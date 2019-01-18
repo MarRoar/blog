@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>变量的定义</title>
+</head>
+<body>
+	<div>
+		<h2>变量的定义</h2>
+		<p>
+			ECMAScript 的变量是松散类型的，所谓松散类型就是可以用来保存任何类型的数据。<br>其实也就是说每一个变量仅仅是一个用于保存值的占位符。定义变量用 var 关键字，这个在 ES5 里面是这样定义的，后面也会说到 ES6 里面新增加的定义变量的方法和区别。<br>
+			定义一个变量 <code> var message </code> 定义了一个 message 的变量，这个变量可以用来保存任何值(如果初始化没有赋值，则变量会保存一个默认的值 undefined) <br>
+			<code>var message = 'hi'</code><br>
+			message 在一开始保存了一个字符串值 'hi',。像这样初始化变量并不会把它标记为字符串类型；初始化的过程就是给变量赋一个值那么简单。因此，可以在修改变量值的同时修改值的类型。
+			<code>var message = 'hi'</code><br>
+			<code>message = 100</code><br>
+			var 在定义的变量成为定义该变量的作用域中的局部变量。也就是说如果在函数中用 var 定义一个变量，那么在函数退出后就会被销毁。<br>
+			如果在函数里面如果省略 var 则这个变量会被定义成全局变量。<br>
+		</p>
+		<span>有var 和 没有 var 定义变量的区别</span>
+		<ol>
+			<li>在函数里面var 会定义成局部变量，无var 会定义成全局变量</li>
+			<li>是否可以被 delete 删除</li>
+			<li>是否会被变量提示</li>
+		</ol>
+	</div>
+	<div>
+		<p>ES6 里面定义的变量</p>
+		
+	</div>
+	<script>
+		console.log('a', a)
+
+		var a = 100;
+		b = 100;
+		delete window.a
+		delete window.b
+		console.log(window)
+
+	</script>
+</body>
+</html>
