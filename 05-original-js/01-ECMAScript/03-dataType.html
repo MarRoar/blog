@@ -3,6 +3,12 @@
 <head>
 	<meta charset="UTF-8">
 	<title>数据类型</title>
+	<style>
+		.question {
+			background-color: yellow;
+			color: red;
+		}
+	</style>
 </head>
 <body>
 	<article>
@@ -16,8 +22,46 @@
 	</article>
 	<article>
 		<p>在ES5 中规定的有5种基本数据类型(), Undefined,Null,Boolean,Number,String和1种复杂类型Object。ES5 不支持任何创建自定义类型的机制，而所有值最终都将是上述6 种数据类型之一。常用于检测数据类型的是 typeof 操作符因此例子中的圆括号尽管可以使用，但不是必需的。</p>
+		<p>在ES6 中基本类型的数据又增加了 Symbol</p>
 		<p>typof null 的时候返回的是 object，因为特殊值 null 被认为是一个空的对象的引用</p>
+		<p>在内存里面 比本类型的数据是放在栈内存里面的，引用类型的数据是放在堆内存里面</p>
+		<p>
+			对于引用类型的数据如果想要判断是由什么函数实例化的 可以用 instanceof 来判断
+		</p>
+		<p>
+			为什么 null 和 undefined 比较(==)的时候是相等的，那是因为undefined的值是派生自 null的值,在使用 == 时候会转换操作的数据的，如果用 === 就是 false 了。<br>
+		</p>
+	</article>
+	<article>
+		<ul>
+			<li>
+				undefined: <br>
+				使用 var 初始化变量未赋值的时候，这个变量默认的值是 undefined。<br>
+				如果一个变量没有被声明 typeof 变量，的结果也是 undefined。
+			</li>
+			<li>
+				null: <br>
+				null 从逻辑角度来看 null 值表示一个空对象的指针。<br>
+				为什么 null 和 undefined 比较(==)的时候是相等的，那是因为undefined的值是派生自 null的值,在使用 == 时候会转换操作的数据的，如果用 === 就是 false 了。<br>
+				null 和 undefined 在使用上是有区别的，如果初始化的变量是 引用类型的话，最好使用 null,如果是基本类型的话就使用 undefined，当然你也可以不用传默认值。
+			</li>
+			<li>
+				boolean: <br>
+				Boolean 该类型只有两个字面值 true 和 false <br>
+				ECMAScript 中的所有数据类型都可以转换成 Boolean值。 <br>
+				0, '', NaN, null, undefined转换成 false， 其他情况转换成 true <br>
+			</li>
+			<li>
+				Number: <br>
+				数据类型的 整数和浮点数, 数值范围，NaN, 数值转换， <br>
 
+			</li>
+		</ul>
+	</article>
+
+	<article class="question">
+		问题：
+		其他语言是否有从其他类型转换成 Boolean 类型的方法?
 	</article>
 
 	<script>
@@ -31,6 +75,14 @@
 		console.log(typeof null); // object
 		console.log(typeof ob); // object
 		console.log(typeof fn); // function
+
+		console.log(({}) instanceof Object)              // true
+		console.log(([]) instanceof Array)               // true
+		console.log((/aa/g) instanceof RegExp)           // true
+		console.log((function(){}) instanceof Function)  // true
+
+		console.log(null == undefined)
+		console.log(null === undefined)
 	</script>
 </body>
 </html>
