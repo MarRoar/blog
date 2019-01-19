@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数据类型</title>
+</head>
+<body>
+	<article>
+		<h2>ES5 数据类型</h2>
+		<ul>
+			<li>ES5 里面有什么数据类型？</li>
+			<li>怎么判断数据类型？</li>
+			<li>ES6 有没有新补充数据类型？如果有是什么？</li>
+			<li>数据类型个在内存中的存储？</li>
+		</ul>
+	</article>
+	<article>
+		<p>在ES5 中规定的有5种基本数据类型(), Undefined,Null,Boolean,Number,String和1种复杂类型Object。ES5 不支持任何创建自定义类型的机制，而所有值最终都将是上述6 种数据类型之一。常用于检测数据类型的是 typeof 操作符因此例子中的圆括号尽管可以使用，但不是必需的。</p>
+		<p>typof null 的时候返回的是 object，因为特殊值 null 被认为是一个空的对象的引用</p>
+
+	</article>
+
+	<script>
+		console.log(typeof a); // undefined
+		console.log(typeof (1)); // number
+		console.log(typeof '1'); // string
+		console.log(typeof false); // boolean
+
+		var ob = {}
+		function fn() {}
+		console.log(typeof null); // object
+		console.log(typeof ob); // object
+		console.log(typeof fn); // function
+	</script>
+</body>
+</html>
