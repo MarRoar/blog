@@ -60,9 +60,41 @@
 			</li>
 			<li>
 				String: <br>
-				
+				<p>
+					ECMAScript 中字符串是不可变的，如果要改变的，就要先销毁之前的数据。
+					<code>
+						<br>
+						var lang = 'java'; <br>
+						lang = lang + 'Script';
+					</code>
+					<p>
+						数值，布尔，对象和字符串值都有 toString() 方法, null 和 undefined 没有这个方法。
+						<br>
+						还有一个 String() 方法也可以将其他类型转换成 String 类型 <br>
+						<code>
+							String(10); // '10' <br>
+							String(null); // 'null' <br>
+							String(undefined); // 'undefined' <br>
+						</code>
+					</p>
+				</p>
+			</li>
+			<li>
+				Object: 类型 <br>
+				在 ECMAScript 中 object类型是所有它的实例的基础，Object 类型所具有的任何属性和方法也同样存在于更具体的对象中。
+				<p>Object 的每个实例都具有下列属性和方法。</p>	
+				<p>constructor：保存着用于创建当前对象的函数。对于前面的例子而言，构造函数（constructor）就是Object()。</p>
+				<p>hasOwnProperty(propertyName)：用于检查给定的属性在当前对象实例中（而不是在实例的原型中）是否存在。其中，作为参数的属性名（propertyName）必须以字符串形式指定（例如：o.hasOwnProperty("name")）。</p>
+				<p>isPrototypeOf(object)：用于检查传入的对象是否是传入对象的原型（第5 章将讨论原型）。</p>
+				<p>propertyIsEnumerable(propertyName)：用于检查给定的属性是否能够使用for-in 语句（本章后面将会讨论）来枚举。与hasOwnProperty()方法一样，作为参数的属性名必须以字符串形式指定。</p>
+				<p>toLocaleString()：返回对象的字符串表示，该字符串与执行环境的地区对应。</p>
+				<p>toString()：返回对象的字符串表示。</p>
+				<p>valueOf()：返回对象的字符串、数值或布尔值表示。通常与toString()方法的返回值相同。</p>
 			</li>
 		</ul>
+	</article>
+	<article>
+		在 ES6 中新增加了一种类型的数据 Symbol,
 	</article>
 
 	<article class="question">

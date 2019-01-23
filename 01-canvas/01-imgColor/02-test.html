@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>提取图片的颜色</title>
+	<style>
+		canvas {
+			background-color: yellow;
+		}
+	</style>
+</head>
+<body>
+	<p>描述：图片里面提取图片里面的绿色的点</p>
+	<div>
+		<canvas id="myCanvas">抱歉，您的浏览器还不支持canvas。</canvas>
+		<input type="file" id="myFile" />
+	</div>
+	<script>
+		var myCanvas = document.getElementById('myCanvas');
+		var myFile = document.getElementById('myFile');
+
+		myFile.onchange = function(event) {
+			var selectedFile = event.target.files[0];
+			var reader = new FileReader();
+			reader.onload = putImage2Canvas;
+			reader.readAsDataURL(selectedFile);
+		}
+
+		function putImage2Canvas(event) {
+			var img = new Image();
+			img.src = event.target.result;
+			img.onload = function(){
+				myCanvas.width = img.width * 2;
+				myCanvas.height = img.height *2;
+				var context = myCanvas.getContext('2d');
+				context.drawImage(img, 0, 0);
+				var imgdata = context.getImageData(0, 0, img.width, img.height);
+				// 处理imgdata
+				// console.log(imgdata.data.length)
+				for(var i=0, len= imgdata.data.length; i<len; i+=4) {
+
+					// if (imgdata.data[i+1] > 30) {
+					// 	console.log(imgdata.data[i],imgdata.data[i+1],imgdata.data[i+2])
+					// }
+					if (imgdata.data[i+1] < 30) {
+						// console.log(imgdata.data[i],imgdata.data[i+1],imgdata.data[i+2])
+
+					    imgdata.data[i] = 0;
+					    imgdata.data[i+1] = 0;
+					    imgdata.data[i+2] = 0;
+					} else {
+						console.log(imgdata.data[i],imgdata.data[i+1],imgdata.data[i+2])						
+					}
+					// console.log(imgdata.data[i],imgdata.data[i+1],imgdata.data[i+2])
+					// 判断下绿色
+					// if (imgdata.data[i] == 0 && imgdata.data[i+2] == 0) {
+					// 	// console.log(imgdata.data[i],imgdata.data[i+1],imgdata.data[i+2])
+					// 	// if (imgdata.data[i+1] > 150) {
+
+					//     imgdata.data[i] = 255-imgdata.data[i];
+					//     imgdata.data[i+1] = 255-imgdata.data[i+1];
+					//     imgdata.data[i+2] = 255-imgdata.data[i+2];
+
+					// 	// }
+					// }
+
+					// if ((imgdata.data[i+1] - imgdata.data[i] > 30) && (imgdata.data[i+1] - imgdata.data[i+2] > 30)) {
+					// 	// console.log(imgdata.data[i],imgdata.data[i+1],imgdata.data[i+2])
+
+					    // imgdata.data[i] = 255-imgdata.data[i];
+					    // imgdata.data[i+1] = 255-imgdata.data[i+1];
+					    // imgdata.data[i+2] = 255-imgdata.data[i+2];
+					// }
+
+
+				}
+				context.putImageData(imgdata, 0, 0);
+			}
+		}
+
+	</script>
+</body>
+</html>
