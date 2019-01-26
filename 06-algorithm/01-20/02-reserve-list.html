@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function(head) {
+	if (head == null) return null;
+	if (head.next == null) return head;
+
+	var nex = head.next;
+	var newHead = reverseList(nex.next);
+	nex.next = head;
+	head.next = null;
+	return newHead
+};
+	</script>
+</body>
+</html>
