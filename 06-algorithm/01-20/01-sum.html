@@ -13,14 +13,16 @@
 		 */
 		var twoSum = function(nums, target) {
 			let result = [];
+			let p = {};
 			for (var i = 0; i < nums.length; i++) {
-				var x = nums[i],
-					y = target - x;
-
-				if (nums.includes(y)) {
-					console.log(x, y)
+				var x = nums[i];
+				for (var j = 0; j < nums.length; j++) {
+					var y = nums[j];
+					if (x + y == target) {
+						result.push(i);
+						result.push(j);
+					}
 				}
-
 			}
 
 			return result;
@@ -28,7 +30,9 @@
 		var nums = [2, 7, 11, 15], 
 		target = 9;
 
-		twoSum(nums, target)
+		var a = twoSum(nums, target)
+
+		console.log(a)
 	</script>
 </body>
 </html>
