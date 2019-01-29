@@ -1,0 +1,73 @@
+JavaScript 在ES6 之前 有对象的概念但是 没有类的概念
+
+有人说 JavaScript是面向对象的语言，有人说JavaScript是基于对象的语言？
+怎么定义面向对象和基于对象呢？
+
+先看 JavaScript标准基于对象的定义：语言和宿主的基础设施由对象提供，并且JavaScript程序是一系列互相通讯的对象集合。
+
+自然界的对象定义
+编程语言中的对象，其中最成功的是 “类”。
+
+JavaScript早年选择了 更为冷门的方式：原型。后来作者又在“原型运行时”的基础上引入了 new , this等语言特性。
+
+如果我们从运行时角度来谈论对象，就是在讨论 JavaScript实际运行中的模型，幸运的是，从运行时的角度看，可以不必受到这些“基于类的实施”困扰，
+因为任何语言运行时类的概念都是被弱化的。
+
+《面向对象分析与设计》中对象的基本特点。
+1、对象具有唯一标识。2、对象有状态(从js角度看是属性)。3、对象有行为(从js角度看是方法)。
+
+状态和行为不同语言中说法不一样，C++中称他们为“成员变量”和“成员函数”。
+
+在JavaScript中，将状态和行为统一抽象为属性，JavaScript中将函数设计成一种特殊对象。
+    var o = { 
+        d: 1,
+        f() {
+            console.log(this.d);
+        }    
+    };
+
+
+在实现了对象基本特征的基础上, 我认为，JavaScript 中对象独有的特色是：对象具有高度的动态性，
+这是因为 JavaScript 赋予了使用者在运行时为对象添改状态和行为的能力。
+
+
+为了提高抽象能力，JavaScript属性 它提供了数据属性 和 访问器属性(getter/setter) 两种。
+
+对于 JavaScript来说，属性并非只是简单的名称和值，JavaScript用一组特征(attribute)来描述属性
+1 数据属性 数据属性有四个特征，
+    a) value：就是属性的值。 
+    b) writable：决定属性能否被赋值。
+    c) enumerable：决定 for in 能否枚举该属性。 
+    d) configurable：决定该属性能否被删除或者改变特征值。
+
+2 访问器属性，四个特征。
+    a) getter：函数或 undefined，在取属性值时被调用。
+    b) setter：函数或 undefined，在设置属性值时被调用。
+    c) enumerable：决定 for in 能否枚举该属性。
+    d) configurable：决定该属性能否被删除或者改变特征值。
+
+定义属性的代码会产生数据属性，
+其中的 writable、enumerable、configurable 都默认为 true。
+我们可以使用内置函数 Object.getOwnPropertyDescripter 来查看，如以下代码所示：
+
+    var o = { a: 1 };
+    o.b = 2;
+    //a 和 b 皆为数据属性
+    Object.getOwnPropertyDescriptor(o,"a") // {value: 1, writable: true, enumerable: true, configurable: true}
+    Object.getOwnPropertyDescriptor(o,"b") // {value: 2, writable: true, enumerable: true, configurable: true}
+
+如果要改变属性的特征，或者定义访问器属性，可以使用 Object.defineProperty。
+
+创建对象的时候，也可以使用 get 和 set 关键字来创建访问器属性。
+    var o = { get a() { return 1 } };
+    console.log(o.a); // 1
+
+JavaScript对象的运行时是一个“属性的集合”。
+
+可以理解为什么会有“JavaScript 不是面向对象”这样的说法了。
+这是由于 JavaScript 的对象设计跟目前主流基于类的面向对象差异非常大。
+
+JavaScript 提供了完全运行时的对象系统，这使得他可以模仿多数面向对象编程范式。
+
+
+
