@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表盘</title>
+</head>
+<body>
+	<canvas id="drawing" width="200" height="200"></canvas>
+	<script>
+		var drawing = document.getElementById('drawing');
+		if (drawing.getContext) {
+			var context = drawing.getContext('2d');
+
+			// 开始绘制路径
+			context.beginPath();
+			context.arc(100, 100, 99, 0, 2*Math.PI, false);
+
+			context.moveTo(194, 100);
+			context.arc(100, 100, 94, 0, 2*Math.PI, false);
+
+			// 变换原点
+			context.translate(100, 100);
+
+			context.rotate(20);
+
+			context.moveTo(0, 0);
+			context.lineTo(70, 0);
+
+			context.moveTo(0, 0);
+			context.lineTo(45, 45);
+
+			context.font = 'bold 14px Arial';
+			context.textAlign = 'center';
+			context.textBaseline = 'bottom';
+			context.fillText('12', 0, -70);
+
+			context.strokeStyle = '#000000';
+			context.stroke();
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas保存成图片</title>
+</head>
+<body>
+	<canvas id="drawing" width="200" height="200">不支持</canvas>
+	<script>
+		var drawing = document.getElementById('drawing');
+
+		if (drawing.getContext) {
+			// 取出图片
+			var imgUrl = drawing.toDataURL('image/png');
+
+			// 显示图片
+			var image = document.createElement('img');
+			image.src = imgUrl;
+			document.body.appendChild(image);
+		}
+	</script>
+</body>
+</html>
