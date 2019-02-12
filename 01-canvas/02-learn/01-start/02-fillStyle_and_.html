@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>填充和描边</title>
+</head>
+<body>
+	<canvas id="drawing" width="200" height="200">不支持</canvas>
+	<script>
+		var drawing = document.getElementById('drawing');
+
+		if (drawing.getContext) {
+			var context = drawing.getContext('2d');
+
+			context.strokeStyle = 'red';
+			context.fillStyle = '#0000ff';
+
+		}
+	</script>
+</body>
+</html>
