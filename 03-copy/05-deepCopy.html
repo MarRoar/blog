@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>深拷贝</title>
+</head>
+<body>
+	<p>
+		判断一个对象是什么类型的？ 数组，{}对象, 正则，函数，日期，DOM节点。
+	</p>
+	<p>
+		用什么方法判断 typeof 或者 toString() 方法
+	</p>
+	<p>正则怎么拷贝？</p>
+	<p>根据判断出来的类型来创建初始化对象</p>
+	<script>
+		function deepClone(target) {
+			// var result = {};
+			// if (typeof target !== 'object' || target === null || target === undefined) return target;
+
+			var _toString = Object.prototype.toString;
+
+			// null, undefined, non-object, function
+			if (!target || typeof target !== 'object') {
+				return target;
+			}
+
+			// DOM Node
+			if (target.nodeType && 'cloneNode' in target) {
+				return target.cloneNode(true); 
+			}
+
+			//Date
+			if (_toString.call(target) === '[object Date]') {
+				return new Date(target.getTime());
+			}
+
+			//RegExp
+			if (_toString.call(target) === '[object RegExp]') {
+				var flags = [];
+				if (target.global) { flags.push('g'); }
+				if (target.multiline) { flags.push('m'); }
+				if (target.ignoreCase) { flags.push('i'); }
+
+				return new RegExp(target.source, flags.join(''));
+			}
+			
+			var result = Array.isArray(target) ? []:
+				target.constructor ? new target.constructor() : {};
+
+			for(var key in target) {
+				// console.log(item)
+				result[key] = deepClone(target[key])
+			}
+			// console.log(result)
+			return result;
+		}
+
+		var a = {
+		    name: 'qiu',
+		    birth: new Date(),
+		    pattern: /qiu/gim,
+		    container: document.body,
+		    hobbys: ['book', new Date(), /aaa/gim, 111],
+		    fn: function() {}
+		};
+
+		function A() {
+		    this.a = a;
+		}
+
+
+		var c = new A();
+		var b = deepClone(c);
+		console.log(c.a === b.a);
+		console.log(c, b);
+
+
+		// console.log(typeof A) // function
+	</script>
+</body>
+</html>
