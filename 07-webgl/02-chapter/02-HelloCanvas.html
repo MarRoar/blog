@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>hello canvas</title>
+</head>
+<body>
+	<canvas id="example" width="400" height="400"></canvas>
+	<script>
+		var canvas = document.getElementById('example');
+		var gl = canvas.getContext('webgl'); // 获取 webgl绘制上下文
+		if (!gl) console.log("fail");
+
+		gl.clearColor(0, 0, 0, 1); // 这四个值是rgba 值的范围是 0 - 1 (OpenGL里面是这样规定的，所以webgl也就继承过来用)
+		// 设置完清空颜色后，这个背景色就会贮存在 webgl系统中
+		gl.clear(gl.COLOR_BUFFER_BIT); // 实际上是 清除颜色缓冲区
+
+		// webgl 还会其他种类的缓冲区，比如 深度缓冲区、模板缓冲区
+
+	</script>
+</body>
+</html>
