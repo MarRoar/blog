@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>05-多个纹理叠加</title>
+</head>
+<body>
+	<canvas id="example" width="400" height="400"></canvas>
+
+  <script type="x-shader/x-vertex" id="vertexshader">
+  	attribute vec4 a_Position;
+  	attribute vec2 a_TexCoord;
+  	varying vec2 v_TexCoord;
+  	void main() {
+  		gl_Position = a_Position;
+  		v_TexCoord = a_TexCoord;
+  	}
+  </script>
+  <script type="x-shader/x-fragment" id="fragmentshader">
+  	precision mediump float; // 设置精度
+  	varying vec2 v_TexCoord;
+  	uniform sampler2D u_Sampler0;
+  	uniform sampler2D u_Sampler1;
+  	void main() {
+  		vec4 color0 = texture2D(u_Sampler0, v_TexCoord);
+  		vec4 color1 = texture2D(u_Sampler1, v_TexCoord);
+  		gl_FragColor = color0 * color1;
+  	}
+  </script>
+
+  <script src="../lib/webgl-utils.js"></script>
+  <script src="../lib/webgl-debug.js"></script>
+  <script src="../lib/cuon-utils.js"></script>
+
+	<script>
+		var VSHADER_SOURCE = document.getElementById('vertexshader').textContent;
+		var FSHADER_SOURCE = document.getElementById('fragmentshader').textContent;
+
+		var canvas = document.getElementById('example');
+		var gl = canvas.getContext('webgl');
+
+		if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
+			console.log("初始化着色器失败");
+		}
+
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.clear(gl.COLOR_BUFFER_BIT);
+
+		var n = initVertexBuffers(gl);
+		if (n < 0) {
+			console.log("点设置失败");
+		}
+		if (!initTextures(gl, n)) {
+			console.log("纹理配置失败")
+		}
+
+		function initVertexBuffers(gl) {
+			var verticesTexCoords = new Float32Array([
+				-0.5, 0.5, 0.0, 1.0,
+				-0.5, -0.5, 0.0, 0.0,
+				0.5, 0.5, 1.0, 1.0,
+				0.5, -0.5, 1.0, 0.0
+			])
+
+			var n = 4; //点的数量
+
+			// 创建缓冲区对象
+			var vertexTexCoordsBuffer = gl.createBuffer();
+			if (!vertexTexCoordsBuffer) {
+				console.log('缓冲区对象创建失败');
+				return -1
+			}
+
+			gl.bindBuffer(gl.ARRAY_BUFFER, vertexTexCoordsBuffer);
+			gl.bufferData(gl.ARRAY_BUFFER, verticesTexCoords, gl.STATIC_DRAW);
+
+			var FSIZE = verticesTexCoords.BYTES_PER_ELEMENT;
+
+			var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
+
+			gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, FSIZE*4, 0);
+			gl.enableVertexAttribArray(a_Position);
+
+			var a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
+			gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, FSIZE*4, FSIZE*2);
+			gl.enableVertexAttribArray(a_TexCoord);
+
+			return n;
+		}
+
+		function initTextures(gl, n) {
+			var texture0 = gl.createTexture(); // 创建纹理对象
+			var texture1 = gl.createTexture(); // 创建纹理对象
+
+			var u_Sampler0 = gl.getUniformLocation(gl.program, 'u_Sampler0');
+			var u_Sampler1 = gl.getUniformLocation(gl.program, 'u_Sampler1');
+
+			var image0 = new Image();
+			var image1 = new Image();
+			image0.onload = function () {
+				loadTexture(gl, n, texture0, u_Sampler0, image0, 0);
+			}
+			image0.src = '../resources/redflower.jpg';
+
+			image1.onload = function () {
+				loadTexture(gl, n, texture1, u_Sampler1, image1, 1);
+			}
+			image1.src = '../resources/circle.gif'
+
+			return true;
+		}
+
+		var g_texUnit0 = false, g_texUnit1 = false;
+		function loadTexture(gl, n, texture, u_Sampler, image, texUnit) {
+			gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // 对纹理进行 Y 轴翻转
+			if (texUnit == 0) {
+				gl.activeTexture(gl.TEXTURE0); // 开启0号纹理单元
+				g_texUnit0 = true;
+			} else {
+				gl.activeTexture(gl.TEXTURE1); // 开启0号纹理单元
+				g_texUnit1 = true;
+			}
+
+			gl.bindTexture(gl.TEXTURE_2D, texture); //绑定纹理对象
+
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); // 配置纹理参数
+			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image); //配置纹理图像
+			gl.uniform1i(u_Sampler, texUnit); // 将0号纹理传递给着色器
+
+			gl.clear(gl.COLOR_BUFFER_BIT);
+
+			if (g_texUnit0 && g_texUnit1) {
+				gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+			}
+		}
+
+
+
+	</script>
+</body>
+</html>
