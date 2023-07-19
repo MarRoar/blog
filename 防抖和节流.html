@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button id="b">防抖</button>
+    <hr>
+    <button id="t">节流</button>
+
+    <script>
+
+        /**
+         * 防抖和节流都是用 setTimeout 来实现的。但是实现的方式也有所不同。
+         * 防抖：对于多次执行的程序，防抖只会执行最后一次。那么要只执行最后一次的话，就必须把之前的定时器都清除。所以用 clearTimeout(timer)
+         * 节流：对于多次执行的程序，节流是在规定的时间内，只执行一次。关键点是在规定的时间内，也就是说在 setTimeout 没有执行完的时候，是不会让再开启一个定时器的，所以在 setTimeout() 之前判断是否这个定时器还没执行完，没执行完就不让执行了。
+         * 
+         */
+
+        // 防抖
+        function debounce(func, delay) {
+            let timer = null;
+            return function() {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    func.apply(this, arguments);
+                }, delay);
+            }
+        }
+
+        // 节流
+        // 节流是在规定的时间内执行
+
+        function throttle(func, delay) {
+            let timer = null;
+            return function() {
+                if(!timer) {
+                    timer = setTimeout(() => {
+                        func.apply(this, arguments);
+                        timer = null;
+                    }, delay);
+                }
+            }
+        }
+
+        // 测试
+        document.getElementById('b').addEventListener('click', debounce(() => {
+            console.log('防抖了');
+        }, 500))
+
+        document.getElementById('t').addEventListener('click', throttle(() => {
+            console.log('节流了');
+        }, 500))
+        
+    </script>
+
+</body>
+
+</html>
