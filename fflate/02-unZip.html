@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-unZip解压</title>
+</head>
+
+<body>
+    <input type="file">
+
+    <script type="module">
+        import { zip, zipSync, unzip, unzipSync, strToU8, strFromU8 } from './libs/fflate.module.js';
+        import { save } from './libs/download.js';
+
+        /**
+         * 同步解压
+        */
+        let oInput = document.querySelectorAll('input')[0];
+        oInput.addEventListener('change', function () {
+            let data = this.files[0];
+
+            // 只处理 zip 文件
+            if(data.type != 'application/x-zip-compressed') return false;
+
+            let reader = new FileReader();
+            reader.addEventListener('load', (e) => {
+                let zip = unzipSync(new Uint8Array(e.target.result));
+
+                for (let key in zip) {
+                    let type = checkType(key);
+
+                    if (type === 'image') {
+                        showImage(zip[key]);
+
+                    } else if (type === 'string') {
+                        let data = strFromU8(zip[key]);
+
+                        console.log('--------------------------------');
+                        console.log('文件：', key);
+                        console.log(data);
+                    }
+                }
+            });
+
+            reader.addEventListener('error', (e) => {
+                console.log('文件读错了');
+            });
+
+            reader.readAsArrayBuffer(data);
+        });
+
+        function checkType(str) {
+            const imgs = ['png', 'jpg'];
+            const type = str.slice(str.lastIndexOf('.') + 1);
+
+            if (imgs.includes(type)) {
+                return 'image';
+            } else {
+                return 'string';
+            }
+        }
+
+        function showImage(uint8Array) {
+
+            const blob = new Blob([uint8Array], { type: 'image/png' });
+            const imageURL = URL.createObjectURL(blob);
+            const imgElement = document.createElement('img');
+            imgElement.src = imageURL;
+
+            document.body.appendChild(imgElement);
+        }
+
+        function showStr() {
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+/*
+# JavaScript文件压缩和解压
+我使用的是[fflate](https://github.com/101arrowz/fflate)，具体使用如下。
+[本文示例代码地址](https://github.com/MarRoar/blog/tree/master/fflate)
+
+### 压缩
+首先说一下压缩和解压的大致流程：
+在PC上压缩时，通常是有一个或者多个文件(或文件夹)，然后压缩成一个 xxx.zip 文件。这个是压缩过程，要点是 1.要有文件 2.压缩操作。
+
+**使用的压缩方法:**
+1. 同步压缩 zipSync();
+2. 回调压缩 Zip();
+
+#### 同步压缩zipSync()
+先看示例代码。。
+```
+let str = "你好哇哇";
+const zipped = zipSync({
+    "dir1": {
+        "nested": {
+            "你好.txt": strToU8(str)
+        }
+    },
+    "dir2": {
+        "测试.txt": strToU8('hello')
+    },
+    "test.js": strToU8("console.log('hello')")
+}, {
+    level: 1,
+});
+
+// 下载到本地
+const blob = new Blob([zipped.buffer], { type: 'application/zip' });
+save(blob, 'zipSyncFile.zip');
+```
+注意的点是，文件都转化保存问Uint8Array类型来存储。  
+如果压缩文件里面有图片，也是需要把图片转换成 Uint8Array类型来存储。  
+示例如下：  
+```
+document.querySelectorAll('input')[0].addEventListener('change', function () {
+    let data = this.files[0];
+
+    if(data.type != 'image/png') {
+        console.error('只能上传 png');
+        return false
+    };
+
+    let reader = new FileReader();
+    reader.addEventListener('load', (e) => {
+        let png = e.target.result;
+
+        let str = "你好哇哇";
+        const zipped = zipSync({
+            "text.png": new Uint8Array(png),
+            "dir2": {
+                "测试.txt": strToU8('hello')
+            }
+        }, {
+            level: 1,
+        });
+        const blob = new Blob([zipped.buffer], { type: 'application/zip' });
+        save(blob, 'zipPng.zip');
+    });
+
+    reader.addEventListener('error', (e) => {
+        console.log('文件读错了');
+    });
+
+    reader.readAsArrayBuffer(data);
+})
+```
+
+#### 回调压缩 Zip()
+示例代码。
+```
+let str = "你好哇哇";
+const zipped = zip({
+    "dir1": {
+        "nested": {
+            "你好.txt": strToU8(str)
+        }
+    },
+    "dir2": {
+        "测试.txt": strToU8('hello')
+    }
+}, {
+    level: 1,
+}, function (p1, data) {
+
+    const blob = new Blob([data], { type: 'application/zip' });
+    save(blob, 'zipFile.zip');
+});
+```
+
+### 解压
+解压的步骤也是，先有 xxx.zip 文件。xxx.zip文件里面可能有多个文件，然后再读取里面的文件。
+
+**使用的解压方法:**
+1. unzipSync()
+
+#### 同步解压unzipSync()
+方法使用
+```
+let zip = unzipSync(new Uint8Array(数据));
+// 解压后的文件数据(可能有多个)
+for (let key in zip) {
+    // 
+}
+```
+具体使用示例  
+```
+let oInput = document.querySelectorAll('input')[0];
+oInput.addEventListener('change', function () {
+    let data = this.files[0];
+
+    // 只处理 zip 文件
+    if(data.type != 'application/x-zip-compressed') return false;
+
+    let reader = new FileReader();
+    reader.addEventListener('load', (e) => {
+        let zip = unzipSync(new Uint8Array(e.target.result));
+
+        for (let key in zip) {
+            let type = checkType(key);
+
+            if (type === 'image') {
+                showImage(zip[key]);
+
+            } else if (type === 'string') {
+                let data = strFromU8(zip[key]);
+
+                console.log('--------------------------------');
+                console.log('文件：', key);
+                console.log(data);
+            }
+        }
+    });
+
+    reader.addEventListener('error', (e) => {
+        console.log('文件读错了');
+    });
+
+    reader.readAsArrayBuffer(data);
+});
+
+function checkType(str) {
+    const imgs = ['png', 'jpg'];
+    const type = str.slice(str.lastIndexOf('.') + 1);
+
+    if (imgs.includes(type)) {
+        return 'image';
+    } else {
+        return 'string';
+    }
+}
+
+function showImage(uint8Array) {
+
+    const blob = new Blob([uint8Array], { type: 'image/png' });
+    const imageURL = URL.createObjectURL(blob);
+    const imgElement = document.createElement('img');
+    imgElement.src = imageURL;
+
+    document.body.appendChild(imgElement);
+}
+
+function showStr() {
+
+}
+```
+
+文件压缩或者解压的时候，可能会和后端接口配合的进行文件的上传和下载过程。这个时候特别注意文件格式。一般是 Blob、File 和 ArrayBuffer 这个三个数据之间转换。
+
+*/    
+</script>
+</body>
+</html>

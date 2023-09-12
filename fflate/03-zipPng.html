@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-zipPng压缩</title>
+</head>
+
+<body>
+    <p>把PNG文件打包到 zip 里面</p>
+    <ol>
+        <li>先监听input变化</li>
+        <li>再读取File文件为 ArrayBuffer</li>
+        <li>把ArrayBuffer 转换为 Uint8Array</li>
+        <li>用 zipSync 打包 </li>
+    </ol>
+    
+    <p><input type="file"></p>
+
+    <script type="module">
+        import { zip, Zip, zipSync, ZipPassThrough, ZipDeflate, strToU8, strFromU8 } from './libs/fflate.module.js';
+        import { save } from './libs/download.js';
+
+        /**
+         * 同步压缩
+        */
+        document.querySelectorAll('input')[0].addEventListener('change', function () {
+            let data = this.files[0];
+
+            if(data.type != 'image/png') {
+                console.error('只能上传 png');
+                return false
+            };
+
+            let reader = new FileReader();
+            reader.addEventListener('load', (e) => {
+                let png = e.target.result;
+
+                let str = "你好哇哇";
+                const zipped = zipSync({
+                    "text.png": new Uint8Array(png),
+                    "dir2": {
+                        "测试.txt": strToU8('hello')
+                    }
+                }, {
+                    level: 1,
+                });
+                const blob = new Blob([zipped.buffer], { type: 'application/zip' });
+                save(blob, 'zipPng.zip');
+            });
+
+            reader.addEventListener('error', (e) => {
+                console.log('文件读错了');
+            });
+
+            reader.readAsArrayBuffer(data);
+        })
+
+    </script>
+
+</body>
+
+</html>
